@@ -346,12 +346,3 @@ class Theatre_Greedy(Theatre):
             self.seating.append(self.seat_greedy_single_group(self.groups[i]))
         # Return the list of seats for each group
         return self.seating
-    
-# Theatre being tested is Tillburg_4 0.7
-fname = 'test_theatre.txt'
-
-# Simple example theatre from the paper
-#fname = 'simple_theatre.txt'
-
-test = Theatre_Greedy(fname)
-test.print_results()
