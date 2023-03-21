@@ -437,40 +437,16 @@ class Theatre_Greedy_Shapes(Theatre):
         # Return the list of valid paths
         return valid_paths
 
-# Theatre being tested is Tillburg_4 0.7
-fname = 'test_theatre.txt'
 
-# Simple example theatre from the paper
-#fname = 'simple_theatre.txt'
+if __name__ == '__main__':
+    # Theatre being tested is Tillburg_4 0.7
+    fname = 'test_theatre.txt'
 
-test = Theatre_Greedy(fname)
-# test.print_theatre()
-# print(test.groups)
-# print(test.find_paths(8))
-# print(test.min_path_degree(test.find_paths(8)))
-test.seat_greedy_single_group(8)
-test.seat_greedy_single_group(8)
-test.print_theatre()
-print(test.check_valid_seat((0,12)))
-print(test.check_valid_seat((0,13)))
-print(test.check_valid_seat((17,8)))
-print(test.check_close((0,12)))
-print(test.check_close((0,13)))
-print(test.check_close((17,8)))
-print(test.layout[0][11])
-print(test.adjacency_list[(0,13)])
-# print(test.find_paths(6))
-# print(test.min_path_degree(test.find_paths(6)))
-print(test.seat_greedy_single_group(6))
-test.print_theatre()
-#print(test.edges)
-#test.seat_greedy()
-#test.analyze_results()
-#test.print_results()
+    # Simple example theatre from the paper
+    #fname = 'simple_theatre.txt'
 
-# Run the greedy search
-greedtest = Theatre_Greedy(fname)
-greedtest.seat_greedy()
-greedtest.analyze_results()
-greedtest.print_results()
-# print(greedtest.layout[17][8])
+    # Run the Greedy Search
+    test = Theatre_Greedy(fname)
+    test.seat_greedy()
+    test.analyze_results()
+    test.print_results()
