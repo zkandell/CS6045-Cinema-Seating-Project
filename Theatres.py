@@ -295,16 +295,6 @@ class Theatre:
         # Print the percentage of people who wanted to attend that were seated
         print('Seated People (%): ' + str(self.percent_people_seated))
 
-
-    def seat_greedy_is(self):
-        pass
-
-    def seat_ILP(self):
-        pass
-
-    def seat_ILP_is(self):
-        pass
-
 # A class that represents a greedy search for the best seats in a theatre
 # Inherits from the Theatre class, so it has access to all of the methods in the Theatre class
 # Methods unique to the Greedy search are defined in this class
