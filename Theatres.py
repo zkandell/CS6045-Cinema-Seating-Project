@@ -9,6 +9,10 @@ class Theatre:
         self.layout = self.theatre_layout(self.file)
         # The total number of available seats in the theatre (represented by 1s in the layout)
         self.num_seats = np.sum(self.layout)
+        # The size of the largest individual group that the seating algorithm will consider
+        # For this project, this is a hard-coded value of 8, but it could be changed to be a variable
+        # The larger this is, however, the more complex the problem becomes, and the longer it takes to solve
+        self.max_group_size = 8
         # The list of groups, represented by a list of integers
         self.groups = self.get_groups(self.file)
         # The total number of groups
@@ -124,9 +128,11 @@ class Theatre:
                 for k in range(0, len(self.edges)):
                     # If the current seat is one of the seats in the edge, add the other seat to the adjacency list
                     if (i,j) == tuple(self.edges[k][0]):
-                        adjacency.append(self.edges[k][1])
+                        adjacency.append(tuple(self.edges[k][1]))
                     elif (i,j) == tuple(self.edges[k][1]):
-                        adjacency.append(self.edges[k][0])
+                        adjacency.append(tuple(self.edges[k][0]))
+                    # Remove duplicates from the adjacency list
+                    adjacency = list(set(adjacency))
                 # Add the adjacency list for the current seat to the adjacency list
                 adjacency_list[(i,j)] = adjacency
         return adjacency_list
@@ -186,10 +192,6 @@ class Theatre:
         # Return the path with the minimum degree
         return paths[index]
 
-
-    #def spath(self):
-    #    pass
-
     # Checks if the given seat is too close to an occupied seat
     # If one of the seats in the adjacency list of the given seat is occupied, return true
     def check_close(self, seat):
@@ -232,8 +234,8 @@ class Theatre:
         # Loop through the seats in the theatre
         for i in range(0, len(self.layout)):
             for j in range(0, len(self.layout[i])):
-                # If the seat is valid, find all paths that start at the seat
-                if self.layout[i][j] == 1:
+                # If the seat is valid, find the rest of the path that starts at the seat
+                if self.check_valid_seat((i,j)):
                     # Create a list to hold the seats in the current path
                     path = [(i,j)]
                     # Moving to the right, check that all seats in the path are valid
@@ -313,9 +315,9 @@ class Theatre_Greedy(Theatre):
         # Run the Theatre constructor
         super().__init__(fname)
         # Run the greedy search
-        self.seat_greedy()
+        #self.seat_greedy()
         # Analyze the results of the greedy search
-        self.analyze_results()
+        #self.analyze_results()
 
     # Runs a greedy search to find the best seats for the given group size at the moment
     # Returns a list of seats to put that group in
@@ -346,3 +348,90 @@ class Theatre_Greedy(Theatre):
             self.seating.append(self.seat_greedy_single_group(self.groups[i]))
         # Return the list of seats for each group
         return self.seating
+
+# A class that represents a greedy search for the best seats in a theatre
+# Inherits from the Theatre class, so it has access to all of the methods in the Theatre class
+# Unlike the Theatre_Greedy class, this class considers different arrangements than seating an entire group in a row
+# For example, a group of 4 could be seated in 2 rows of 2 people next to each other
+class Theatre_Greedy_Shapes(Theatre):
+    # Create the theatre
+    def __init__(self, fname):
+        # Run the Theatre constructor
+        super().__init__(fname)
+        # Run the search
+        self.seat_greedy()
+        # Analyze the results of the greedy search
+        self.analyze_results()
+
+    # Defines the shapes that can be used to seat a group
+    # The shapes are defined as a tuple of tuples that represent the coordinates of the seats
+    # The coordinates are relative to the back left corner of the shape
+    # For example, the shape of a group of 4 could be defined as ((0,0), (0,1), (1,0), (1,1))
+    # This would represent a 2x2 square of seats
+    def define_shapes(self):
+        # Create a dictionary to hold the shapes
+        shapes = {}
+        # Since this project uses a fixed number for the largest group size, this will be hard coded
+        # This can be changed to be more dynamic if needed
+        # Additional constraints:
+        # No one in the group will be seated alone in their row
+        # All rows of the shape must be aligned with the back left seat
+        # Shape1 - 1 person, no room for variation
+        shapes[1] = (((0,0)))
+        # Shape2 - 2 people, no room for variation (just two people sitting next to each other)
+        shapes[2] = (((0,0), (0,1)))
+        # Shape3 - 3 people, since no person can be seated alone in their row, there is only one shape
+        shapes[3] = (((0,0), (0,1), (0,2)))
+        # Shape4 - 4 people, there are 2 shapes - all 4 in 1 row, or 2 rows of 2
+        shapes[4] = (((0,0),(0,1),(0,2),(0,3)),((0,0), (0,1), (1,0), (1,1)))
+        # Shape5 - 5 people, there are 3 shapes - all 5 in 1 row, 3 in the back row and 2 in the front row, or 2 in the back row and 3 in the front row
+        shapes[5] = (((0,0),(0,1),(0,2),(0,3),(0,4)),((0,0), (0,1), (0,2), (1,0), (1,1)),((0,0), (0,1), (1,0), (1,1), (1,2)))
+        # Shape6 - 6 people, there are 5 shapes - all 6 in 1 row, 3 in the back row and 3 in the front row, 2 in the back row and 2 in the middle row and 2 in the front row, 2 in the front row and 2 in the front row, or 2 in the back row and 4 in the front row
+        shapes[6] = (((0,0),(0,1),(0,2),(0,3),(0,4),(0,5)),((0,0), (0,1), (0,2), (1,0), (1,1), (1,2)),((0,0), (0,1), (1,0), (1,1), (2,0), (2,1)),((0,0), (0,1), (1,0), (1,1), (1,2), (1,3)),((0,0), (0,1), (0,2), (0,3), (1,0), (1,1)))
+        # Shape7 - 7 people, 1 row of 7
+        # 2 rows: 5 and 2, 4 and 3, 3 and 4, 2 and 5
+        # 3 rows: 3 and 2 and 2, 2 and 3 and 2, 2 and 2 and 3
+        shapes[7] = (((0,0),(0,1),(0,2),(0,3),(0,4),(0,5),(0,6)),((0,0),(0,1),(0,2),(0,3),(0,4),(1,0),(1,1)),((0,0),(0,1),(0,2),(0,3),(1,0),(1,1),(1,2)),((0,0),(0,1),(0,2),(1,0),(1,1),(1,2),(1,3)),((0,0),(0,1),(1,0),(1,1),(1,2),(1,3),(1,4)),((0,0),(0,1),(0,2),(1,0),(1,1),(2,0),(2,1)),((0,0),(0,1),(1,0),(1,1),(1,2),(2,0),(2,1)),((0,0),(0,1),(1,0),(1,1),(2,0),(2,1),(2,2)))
+        # Shape8 - 8 people, 1 row of 8
+        # 2 rows: 6 and 2, 5 and 3, 4 and 4, 3 and 5, 2 and 6
+        # 3 rows: 4 and 2 and 2, 3 and 3 and 2, 3 and 2 and 3, 2 and 4 and 2, 2 and 3 and 3, 2 and 2 and 4
+        # 4 rows: 2 and 2 and 2 and 2
+        # shapes[8] = 
+
+# Theatre being tested is Tillburg_4 0.7
+fname = 'test_theatre.txt'
+
+# Simple example theatre from the paper
+#fname = 'simple_theatre.txt'
+
+test = Theatre_Greedy(fname)
+# test.print_theatre()
+# print(test.groups)
+# print(test.find_paths(8))
+# print(test.min_path_degree(test.find_paths(8)))
+test.seat_greedy_single_group(8)
+test.seat_greedy_single_group(8)
+test.print_theatre()
+print(test.check_valid_seat((0,12)))
+print(test.check_valid_seat((0,13)))
+print(test.check_valid_seat((17,8)))
+print(test.check_close((0,12)))
+print(test.check_close((0,13)))
+print(test.check_close((17,8)))
+print(test.layout[0][11])
+print(test.adjacency_list[(0,13)])
+# print(test.find_paths(6))
+# print(test.min_path_degree(test.find_paths(6)))
+print(test.seat_greedy_single_group(6))
+test.print_theatre()
+#print(test.edges)
+#test.seat_greedy()
+#test.analyze_results()
+#test.print_results()
+
+# Run the greedy search
+greedtest = Theatre_Greedy(fname)
+greedtest.seat_greedy()
+greedtest.analyze_results()
+greedtest.print_results()
+# print(greedtest.layout[17][8])
