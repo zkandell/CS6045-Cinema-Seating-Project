@@ -7,4 +7,6 @@ fname = 'test_theatre.txt'
 #fname = 'simple_theatre.txt'
 
 test = Theatre_Greedy(fname)
+test.seat_greedy()
+test.analyze_results()
 test.print_results()

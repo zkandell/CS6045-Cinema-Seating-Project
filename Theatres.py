@@ -358,6 +358,8 @@ class Theatre_Greedy_Shapes(Theatre):
     def __init__(self, fname):
         # Run the Theatre constructor
         super().__init__(fname)
+        # Define the shapes that can be used to seat a group
+        self.shapes = self.define_shapes()
         # Run the search
         self.seat_greedy()
         # Analyze the results of the greedy search
@@ -397,6 +399,43 @@ class Theatre_Greedy_Shapes(Theatre):
         # 3 rows: 4 and 2 and 2, 3 and 3 and 2, 3 and 2 and 3, 2 and 4 and 2, 2 and 3 and 3, 2 and 2 and 4
         # 4 rows: 2 and 2 and 2 and 2
         # shapes[8] = 
+        # Return the dictionary of shapes
+        return shapes
+
+    # Finds valid paths for a group of a given size
+    # Returns a list of paths
+    # Each path is a list of tuples that represent the coordinates of the seats
+    # The coordinates are relative to the back left corner of the shape
+    # For example, the path of a group of 4 could be defined as ((0,0), (0,1), (1,0), (1,1))
+    # This would represent a 2x2 square of seats
+    # Uses the shapes dictionary to find possible paths, then checks if they are valid
+    # Overrides the method in the parent class
+    def find_paths(self, group_size):
+        # Get the list of shapes for the given group size
+        shapes = self.shapes[group_size]
+        # Create a list to hold the valid paths
+        valid_paths = []
+        # Loop through the seats in the theatre
+        for i in range(0, len(self.layout)):
+            for j in range(0, len(self.layout[i])):
+                # If the seat is valid, find the rest of the path that starts at the seat
+                if self.check_valid_seat((i,j)):
+                    # Loop through the shapes
+                    for shape in shapes:
+                        # Create a list to hold the path
+                        path = []
+                        # Loop through the seats in the shape
+                        for seat in shape:
+                            # Check if this seat is valid
+                            if self.check_valid_seat((seat[0] + i, seat[1] + j)):
+                                # Add the seat to the path if it is valid
+                                path.append((seat[0] + i, seat[1] + j))
+                        # If the path is the correct size, add it to the list of paths
+                        if len(path) == group_size:
+                            # If it is, add it to the list of valid paths
+                            valid_paths.append(path)
+        # Return the list of valid paths
+        return valid_paths
 
 # Theatre being tested is Tillburg_4 0.7
 fname = 'test_theatre.txt'
