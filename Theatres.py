@@ -343,7 +343,7 @@ class Theatre_Greedy(Theatre):
 # Inherits from the Theatre class, so it has access to all of the methods in the Theatre class
 # Unlike the Theatre_Greedy class, this class considers different arrangements than seating an entire group in a row
 # For example, a group of 4 could be seated in 2 rows of 2 people next to each other
-class Theatre_Greedy_Shapes(Theatre):
+class Theatre_Greedy_Shapes(Theatre_Greedy):
     # Create the theatre
     def __init__(self, fname):
         # Run the Theatre constructor
@@ -351,9 +351,9 @@ class Theatre_Greedy_Shapes(Theatre):
         # Define the shapes that can be used to seat a group
         self.shapes = self.define_shapes()
         # Run the search
-        self.seat_greedy()
+        #self.seat_greedy()
         # Analyze the results of the greedy search
-        self.analyze_results()
+        #self.analyze_results()
 
     # Defines the shapes that can be used to seat a group
     # The shapes are defined as a tuple of tuples that represent the coordinates of the seats
@@ -365,56 +365,107 @@ class Theatre_Greedy_Shapes(Theatre):
         shapes = {}
         # Since this project uses a fixed number for the largest group size, this will be hard coded
         # This can be changed to be more dynamic if needed
-        # Additional constraints:
         # No one in the group will be seated alone in their row
-        # All rows of the shape must be aligned with the back left seat
         # Shape1 - 1 person, no room for variation
-        shapes[1] = (((0,0)))
+        shapes[1] = [((0,0))]
         # Shape2 - 2 people, no room for variation (just two people sitting next to each other)
-        shapes[2] = (((0,0),(0,1)))
+        shapes[2] = [((0,0),(0,1))]
         # Shape3 - 3 people, since no person can be seated alone in their row, there is only one shape
-        shapes[3] = (((0,0),(0,1),(0,2)))
+        shapes[3] = [((0,0),(0,1),(0,2))]
         # Shape4 - 4 people, there are 2 shapes - all 4 in 1 row, or 2 rows of 2
-        shapes[4] = (((0,0),(0,1),(0,2),(0,3)),
-                     ((0,0),(0,1),(1,0),(1,1)))
-        # Shape5 - 5 people, there are 3 shapes - all 5 in 1 row, 3 in the back row and 2 in the front row, or 2 in the back row and 3 in the front row
-        shapes[5] = (((0,0),(0,1),(0,2),(0,3),(0,4)),
+        shapes[4] = [((0,0),(0,1),(0,2),(0,3)),
+                     ((0,0),(0,1),(1,0),(1,1))]
+        # Shape5 - 5 people, 1 row of 5
+        # 2 rows - 3 and 2, 2 and 3
+        shapes[5] = [((0,0),(0,1),(0,2),(0,3),(0,4)),
                      ((0,0),(0,1),(0,2),(1,0),(1,1)),
-                     ((0,0),(0,1),(1,0),(1,1),(1,2)))
-        # Shape6 - 6 people, there are 5 shapes - all 6 in 1 row, 3 in the back row and 3 in the front row, 2 in the back row and 2 in the middle row and 2 in the front row, 2 in the front row and 2 in the front row, or 2 in the back row and 4 in the front row
-        shapes[6] = (((0,0),(0,1),(0,2),(0,3),(0,4),(0,5)),
+                     ((0,0),(0,1),(0,2),(1,1),(1,2)),
+                     ((0,0),(0,1),(1,0),(1,1),(1,2)),
+                     ((0,0),(0,1),(1,-1),(1,0),(1,1))]
+        # Shape6 - 6 people, 1 row of 6
+        # 2 rows - 3 and 3, 4 and 2, 2 and 4
+        # 3 rows - 2 and 2 and 2
+        shapes[6] = [((0,0),(0,1),(0,2),(0,3),(0,4),(0,5)),
                      ((0,0),(0,1),(0,2),(1,0),(1,1),(1,2)),
-                     ((0,0),(0,1),(1,0),(1,1),(2,0),(2,1)),
+                     ((0,0),(0,1),(0,2),(0,3),(1,0),(1,1)),
+                     ((0,0),(0,1),(0,2),(0,3),(1,1),(1,2)),
+                     ((0,0),(0,1),(0,2),(0,3),(1,2),(1,3)),
                      ((0,0),(0,1),(1,0),(1,1),(1,2),(1,3)),
-                     ((0,0),(0,1),(0,2),(0,3),(1,0),(1,1)))
+                     ((0,0),(0,1),(1,-1),(1,0),(1,1),(1,2)),
+                     ((0,0),(0,1),(1,-2),(1,-1),(1,0),(1,1)),
+                     ((0,0),(0,1),(1,0),(1,1),(2,0),(2,1)),]
         # Shape7 - 7 people, 1 row of 7
         # 2 rows: 5 and 2, 4 and 3, 3 and 4, 2 and 5
         # 3 rows: 3 and 2 and 2, 2 and 3 and 2, 2 and 2 and 3
-        shapes[7] = (((0,0),(0,1),(0,2),(0,3),(0,4),(0,5),(0,6)),
+        shapes[7] = [((0,0),(0,1),(0,2),(0,3),(0,4),(0,5),(0,6)),
                      ((0,0),(0,1),(0,2),(0,3),(0,4),(1,0),(1,1)),
+                     ((0,0),(0,1),(0,2),(0,3),(0,4),(1,1),(1,2)),
+                     ((0,0),(0,1),(0,2),(0,3),(0,4),(1,2),(1,3)),
+                     ((0,0),(0,1),(0,2),(0,3),(0,4),(1,3),(1,4)),
                      ((0,0),(0,1),(0,2),(0,3),(1,0),(1,1),(1,2)),
+                     ((0,0),(0,1),(0,2),(0,3),(1,1),(1,2),(1,3)),
                      ((0,0),(0,1),(0,2),(1,0),(1,1),(1,2),(1,3)),
+                     ((0,0),(0,1),(0,2),(1,-1),(1,0),(1,1),(1,2)),
                      ((0,0),(0,1),(1,0),(1,1),(1,2),(1,3),(1,4)),
+                     ((0,0),(0,1),(1,-1),(1,0),(1,1),(1,2),(1,3)),
+                     ((0,0),(0,1),(1,-2),(1,-1),(1,0),(1,1),(1,2)),
+                     ((0,0),(0,1),(1,-2),(1,-2),(1,-1),(1,0),(1,1)),
                      ((0,0),(0,1),(0,2),(1,0),(1,1),(2,0),(2,1)),
+                     ((0,0),(0,1),(0,2),(1,1),(1,2),(2,0),(2,1)),
+                     ((0,0),(0,1),(0,2),(1,0),(1,1),(2,1),(2,2)),
+                     ((0,0),(0,1),(0,2),(1,1),(1,2),(2,1),(2,2)),
                      ((0,0),(0,1),(1,0),(1,1),(1,2),(2,0),(2,1)),
-                     ((0,0),(0,1),(1,0),(1,1),(2,0),(2,1),(2,2)))
+                     ((0,0),(0,1),(1,-1),(1,0),(1,1),(2,0),(2,1)),
+                     ((0,0),(0,1),(1,0),(1,1),(1,2),(2,1),(2,2)),
+                     ((0,0),(0,1),(1,-1),(1,0),(1,1),(2,-1),(2,0)),
+                     ((0,0),(0,1),(1,0),(1,1),(2,0),(2,1),(2,2)),
+                     ((0,0),(0,1),(1,1),(1,2),(2,0),(2,1),(2,2)),
+                     ((0,0),(0,1),(1,0),(1,1),(2,-1),(2,0),(2,1)),
+                     ((0,0),(0,1),(1,-1),(1,0),(2,-1),(2,0),(2,1))]
         # Shape8 - 8 people, 1 row of 8
         # 2 rows: 6 and 2, 5 and 3, 4 and 4, 3 and 5, 2 and 6
-        # 3 rows: 4 and 2 and 2, 3 and 3 and 2, 3 and 2 and 3, 2 and 4 and 2, 2 and 3 and 3, 2 and 2 and 4
+        # 3 rows: 4 and 2 and 2, 3 and 3 and 2, 3 and 2 and 3, 2 and 3 and 3, 2 and 4 and 2, 2 and 2 and 4
         # 4 rows: 2 and 2 and 2 and 2
-        shapes[8] = (((0,0),(0,1),(0,2),(0,3),(0,4),(0,5),(0,6),(0,7)),
+        shapes[8] = [((0,0),(0,1),(0,2),(0,3),(0,4),(0,5),(0,6),(0,7)),
                      ((0,0),(0,1),(0,2),(0,3),(0,4),(0,5),(1,0),(1,1)),
+                     ((0,0),(0,1),(0,2),(0,3),(0,4),(0,5),(1,1),(1,2)),
+                     ((0,0),(0,1),(0,2),(0,3),(0,4),(0,5),(1,2),(1,3)),
+                     ((0,0),(0,1),(0,2),(0,3),(0,4),(0,5),(1,3),(1,4)),
+                     ((0,0),(0,1),(0,2),(0,3),(0,4),(0,5),(1,4),(1,5)),
                      ((0,0),(0,1),(0,2),(0,3),(0,4),(1,0),(1,1),(1,2)),
-                     ((0,0),(0,1),(0,2),(0,3),(1,0),(1,1),(1,2),(1,3)),
+                     ((0,0),(0,1),(0,2),(0,3),(0,4),(1,1),(1,2),(1,3)),
+                     ((0,0),(0,1),(0,2),(0,3),(0,4),(1,2),(1,3),(1,4)),
+                     ((0,0),(0,1),(0,2),(0,3),(1,0),(1,1),(1,2),(1,3)),             
                      ((0,0),(0,1),(0,2),(1,0),(1,1),(1,2),(1,3),(1,4)),
+                     ((0,0),(0,1),(0,2),(1,-1),(1,0),(1,1),(1,2),(1,3)),
+                     ((0,0),(0,1),(0,2),(1,-2),(1,-1),(1,0),(1,1),(1,2)),
                      ((0,0),(0,1),(1,0),(1,1),(1,2),(1,3),(1,4),(1,5)),
-                     ((0,0),(0,1),(0,2),(0,4),(1,0),(1,1),(2,0),(2,1)),
-                     ((0,0),(0,1),(1,0),(1,1),(1,2),(1,3),(2,0),(2,1)),
-                     ((0,0),(0,1),(1,0),(1,1),(2,0),(2,1),(2,2),(2,3)),
+                     ((0,0),(0,1),(1,-1),(1,0),(1,1),(1,2),(1,3),(1,4)),
+                     ((0,0),(0,1),(1,-2),(1,-1),(1,0),(1,1),(1,2),(1,3)),
+                     ((0,0),(0,1),(1,-3),(1,-2),(1,-1),(1,0),(1,1),(1,2)),
+                     ((0,0),(0,1),(1,-4),(1,-3),(1,-2),(1,-1),(1,0),(1,1)),
+                     ((0,0),(0,1),(0,2),(0,3),(1,0),(1,1),(2,0),(2,1)),
+                     ((0,0),(0,1),(0,2),(0,3),(1,1),(1,2),(2,1),(2,2)),
+                     ((0,0),(0,1),(0,2),(0,3),(1,2),(1,3),(2,2),(2,3)),
                      ((0,0),(0,1),(0,2),(1,0),(1,1),(1,2),(2,0),(2,1)),
+                     ((0,0),(0,1),(0,2),(1,0),(1,1),(1,2),(2,1),(2,2)),
                      ((0,0),(0,1),(0,2),(1,0),(1,1),(2,0),(2,1),(2,2)),
+                     ((0,0),(0,1),(0,2),(1,1),(1,2),(2,0),(2,1),(2,2)),
                      ((0,0),(0,1),(1,0),(1,1),(1,2),(2,0),(2,1),(2,2)),
-                     ((0,0),(0,1),(1,0),(1,1),(2,0),(2,1),(3,0),(3,1)))
+                     ((0,0),(0,1),(1,-1),(1,0),(1,1),(2,-1),(2,0),(2,1)),
+                     ((0,0),(0,1),(1,0),(1,1),(1,2),(1,3),(2,0),(2,1)),
+                     ((0,0),(0,1),(1,0),(1,1),(1,2),(1,3),(2,1),(2,2)),
+                     ((0,0),(0,1),(1,0),(1,1),(1,2),(1,3),(2,2),(2,3)),
+                     ((0,0),(0,1),(1,-1),(1,0),(1,1),(1,2),(2,-1),(2,0)),
+                     ((0,0),(0,1),(1,-1),(1,0),(1,1),(1,2),(2,0),(2,1)),
+                     ((0,0),(0,1),(1,-1),(1,0),(1,1),(1,2),(2,1),(2,2)),
+                     ((0,0),(0,1),(1,-2),(1,-1),(1,0),(1,1),(2,-2),(2,-1)),
+                     ((0,0),(0,1),(1,-2),(1,-1),(1,0),(1,1),(2,-1),(2,0)),
+                     ((0,0),(0,1),(1,-2),(1,-1),(1,0),(1,1),(2,0),(2,1)),                   
+                     ((0,0),(0,1),(1,0),(1,1),(2,0),(2,1),(2,2),(2,3)),
+                     ((0,0),(0,1),(1,0),(1,1),(2,-1),(2,0),(2,1),(2,2)),
+                     ((0,0),(0,1),(1,0),(1,1),(2,-2),(2,-1),(2,0),(2,1)),
+                     ((0,0),(0,1),(1,0),(1,1),(2,0),(2,1),(3,0),(3,1))]
         # Return the dictionary of shapes
         return shapes
 
@@ -456,13 +507,27 @@ class Theatre_Greedy_Shapes(Theatre):
 
 if __name__ == '__main__':
     # Theatre being tested is Tillburg_4 0.7
-    fname = 'test_theatre.txt'
+    #fname = 'test_theatre.txt'
 
     # Simple example theatre from the paper
-    #fname = 'simple_theatre.txt'
+    fname = 'simple_theatre.txt'
 
     # Run the Greedy Search
-    test = Theatre_Greedy(fname)
+    test = Theatre_Greedy_Shapes(fname)
+    # Changing the groups to test different group sizes
+    test.groups = [5,5]
+    print(len(test.shapes[8]))
+    # paths = test.find_paths(5)
+    # print(paths)
+    # path = test.min_path_degree(paths)
+    # print(path)
+    # test.seat_greedy_single_group(5)
+    # test.print_theatre()
+    # print(test.check_valid_seat((1,4)))
+    # paths = test.find_paths(5)
+    # print(paths)
+    # path = test.min_path_degree(paths)
+    # print(path)
     test.seat_greedy()
     test.analyze_results()
     test.print_results()
