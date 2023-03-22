@@ -367,7 +367,7 @@ class Theatre_Greedy_Shapes(Theatre_Greedy):
         # This can be changed to be more dynamic if needed
         # No one in the group will be seated alone in their row
         # Shape1 - 1 person, no room for variation
-        shapes[1] = [((0,0))]
+        shapes[1] = [[(0,0)]]
         # Shape2 - 2 people, no room for variation (just two people sitting next to each other)
         shapes[2] = [((0,0),(0,1))]
         # Shape3 - 3 people, since no person can be seated alone in their row, there is only one shape
