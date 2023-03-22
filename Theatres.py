@@ -514,20 +514,6 @@ if __name__ == '__main__':
 
     # Run the Greedy Search
     test = Theatre_Greedy_Shapes(fname)
-    # Changing the groups to test different group sizes
-    test.groups = [5,5]
-    print(len(test.shapes[8]))
-    # paths = test.find_paths(5)
-    # print(paths)
-    # path = test.min_path_degree(paths)
-    # print(path)
-    # test.seat_greedy_single_group(5)
-    # test.print_theatre()
-    # print(test.check_valid_seat((1,4)))
-    # paths = test.find_paths(5)
-    # print(paths)
-    # path = test.min_path_degree(paths)
-    # print(path)
     test.seat_greedy()
     test.analyze_results()
     test.print_results()
