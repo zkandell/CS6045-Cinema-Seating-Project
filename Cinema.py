@@ -46,7 +46,7 @@ class Cinema:
         h = int(content[0])
         w = int(content[1])
         # Create a numpy array of zeros with the dimensions of the Cinema
-        cinema = np.zeros((h,w))
+        cinema = np.zeros((h,w), dtype=int)
         # Loop through all but the last line of the file, and fill that matrix with the values
         for i in range(2, len(content)-1):
             for j in range(0, len(content[i])):
@@ -507,13 +507,14 @@ class Cinema_Greedy_Shapes(Cinema_Greedy):
 
 if __name__ == '__main__':
     # Cinema being tested is Tillburg_4 0.7
-    #fname = 'test_Cinema.txt'
+    #fname = 'test_cinema.txt'
 
     # Simple example Cinema from the paper
-    fname = 'simple_Cinema.txt'
+    fname = 'simple_cinema.txt'
 
     # Run the Greedy Search
     test = Cinema_Greedy_Shapes(fname)
+    print(test.layout)
     test.seat_greedy()
     test.analyze_results()
     test.print_results()
