@@ -1,13 +1,13 @@
 import numpy as np
 
-# The Theatre class represents the theatre and all of the information about it
-# The class is initialized with the name of the file that contains the theatre information
-class Theatre:
+# The Cinema class represents the Cinema and all of the information about it
+# The class is initialized with the name of the file that contains the Cinema information
+class Cinema:
     def __init__(self, file):
         self.file = self.read_file(file)
-        # The layout of the theatre, represented by a numpy array
-        self.layout = self.theatre_layout(self.file)
-        # The total number of available seats in the theatre (represented by 1s in the layout)
+        # The layout of the cinema, represented by a numpy array
+        self.layout = self.Cinema_layout(self.file)
+        # The total number of available seats in the cinema (represented by 1s in the layout)
         self.num_seats = np.sum(self.layout)
         # The size of the largest individual group that the seating algorithm will consider
         # For this project, this is a hard-coded value of 8, but it could be changed to be a variable
@@ -35,23 +35,23 @@ class Theatre:
         content = [x.strip() for x in content]
         return content
 
-    # Constructs the theatre from the content of the file
-    # The first two lines of the file give the height and width of the theatre
-    # The rest of the file (minus the last line) gives the layout of the theatre
+    # Constructs the cinema from the content of the file
+    # The first two lines of the file give the height and width of the cinema
+    # The rest of the file (minus the last line) gives the layout of the cinema
     # 0s represent non-existent seats (for example, an aisle) and 1s represent available seats
     # The layout is stored in a numpy array
     # While not represented here, occupied seats are represented by 2s once they are assigned
-    def theatre_layout(self,content):
-        # Grab the first two lines of the file, the height and width of the theatre
+    def Cinema_layout(self,content):
+        # Grab the first two lines of the file, the height and width of the Cinema
         h = int(content[0])
         w = int(content[1])
-        # Create a numpy array of zeros with the dimensions of the theatre
-        theatre = np.zeros((h,w))
+        # Create a numpy array of zeros with the dimensions of the Cinema
+        Cinema = np.zeros((h,w))
         # Loop through all but the last line of the file, and fill that matrix with the values
         for i in range(2, len(content)-1):
             for j in range(0, len(content[i])):
-                theatre[i-2][j] = int(content[i][j])
-        return theatre
+                Cinema[i-2][j] = int(content[i][j])
+        return Cinema
 
     # Turns the groups notation into a list of integers that represent the groups directly
     # In the file, the last line gives the number of groups of each size (for example, 0 2 0 means no groups of size 1 or 3, with 2 groups of size 2)
@@ -83,7 +83,7 @@ class Theatre:
         edges = []
         # Define the offsets for the seats that can be connected to a seat
         offsets = np.array([[-1,0], [1,0], [0,-1], [0,1], [-1,-1], [-1,1], [1,-1], [1,1], [0,2], [0,-2]])
-        # Loop through the seats in the theatre
+        # Loop through the seats in the Cinema
         for i in range(0, len(self.layout)):
             for j in range(0, len(self.layout[i])):
                 # Loop through the offsets
@@ -91,7 +91,7 @@ class Theatre:
                     # Calculate the coordinates of the seat that the current seat is connected to
                     x = i + offsets[k][0]
                     y = j + offsets[k][1]
-                    # If the seat is within the bounds of the theatre, add the edge to the list
+                    # If the seat is within the bounds of the Cinema, add the edge to the list
                     if x >= 0 and x < len(self.layout) and y >= 0 and y < len(self.layout[i]):
                         edges.append(((i,j),(x,y)))
         # Convert the list of edges into a numpy array
@@ -119,7 +119,7 @@ class Theatre:
     def generate_adjacency_list(self):
         # Create a dictionary to hold the adjacency list
         adjacency_list = {}
-        # Loop through the seats in the theatre
+        # Loop through the seats in the Cinema
         for i in range(0, len(self.layout)):
             for j in range(0, len(self.layout[i])):
                 # Create a list to hold the seats that are connected to the current seat
@@ -148,8 +148,8 @@ class Theatre:
             degrees += self.get_degree(seat)
         return degrees
 
-    # Prints the layout of the theatre
-    def print_theatre(self):
+    # Prints the layout of the Cinema
+    def print_Cinema(self):
         print(self.layout)
 
     
@@ -206,9 +206,9 @@ class Theatre:
         return False
 
     # Returns if the given seat is valid or not
-    # Invalid seats are seats that are outside the theatre, not accessible, already occupied, or too close to an occupied seat
+    # Invalid seats are seats that are outside the Cinema, not accessible, already occupied, or too close to an occupied seat
     def check_valid_seat(self, seat):
-        # If the seat is outside the theatre, return false
+        # If the seat is outside the Cinema, return false
         if seat[0] < 0 or seat[0] >= len(self.layout) or seat[1] < 0 or seat[1] >= len(self.layout[0]):
             return False
         # If the seat is not accessible, return false
@@ -224,14 +224,14 @@ class Theatre:
         return True
 
     # Finds all valid paths of seats that are connected to each other
-    # The paths must be of the given group size, inside the theatre, and not contain any invalid seats (content of the seat is 0)
+    # The paths must be of the given group size, inside the Cinema, and not contain any invalid seats (content of the seat is 0)
     # The paths also must not be too close to seats that are already occupied
     # Returns a list of paths, where each path is a list of seats
     # This only considers paths contained within a single row
     def find_paths(self, group_size):
         # Create a list to hold the paths
         paths = []
-        # Loop through the seats in the theatre
+        # Loop through the seats in the Cinema
         for i in range(0, len(self.layout)):
             for j in range(0, len(self.layout[i])):
                 # If the seat is valid, find the rest of the path that starts at the seat
@@ -250,7 +250,7 @@ class Theatre:
         # Return the list of paths
         return paths
 
-    # Analyzes the results of seating the groups in the theatre
+    # Analyzes the results of seating the groups in the Cinema
     # This has to be called after the groups have been seated
     # For that reason, this is only called in the constructor in the child classes; this class has no seating algorithm
     def analyze_results(self):
@@ -272,12 +272,12 @@ class Theatre:
         # Calculate the percentage of people who wanted to attend that were seated
         self.percent_people_seated = self.num_occupied / self.num_people
     
-    # Prints the results of seating the groups in the theatre
+    # Prints the results of seating the groups in the Cinema
     # This has to be called after the groups have been seated
     # For that reason, this is only called in the constructor in the child classes; this class has no seating algorithm
     def print_results(self):
-        # Print the theatre
-        self.print_theatre()
+        # Print the Cinema
+        self.print_Cinema()
         # Print the groups
         print('Total Groups: ' + str(len(self.groups)))
         # Print the number of groups that were seated
@@ -295,14 +295,14 @@ class Theatre:
         # Print the percentage of people who wanted to attend that were seated
         print('Seated People (%): ' + str(self.percent_people_seated))
 
-# A class that represents a greedy search for the best seats in a theatre
-# Inherits from the Theatre class, so it has access to all of the methods in the Theatre class
+# A class that represents a greedy search for the best seats in a Cinema
+# Inherits from the Cinema class, so it has access to all of the methods in the Cinema class
 # Methods unique to the Greedy search are defined in this class
 # The Greedy search finds the best seats for the given group size at the moment
-class Theatre_Greedy(Theatre):
-    # Create the theatre
+class Cinema_Greedy(Cinema):
+    # Create the Cinema
     def __init__(self, fname):
-        # Run the Theatre constructor
+        # Run the Cinema constructor
         super().__init__(fname)
         # Run the greedy search
         #self.seat_greedy()
@@ -326,27 +326,27 @@ class Theatre_Greedy(Theatre):
         # Return the path
         return path
     
-    # Runs a greedy search for all groups in the theatre
+    # Runs a greedy search for all groups in the Cinema
     # Returns a list of lists of seats to put each group in
     # Also marks the seats as occupied (content of the seat is 2)
     def seat_greedy(self):
         # Create a list to hold the seats for each group
         self.seating = []
-        # Loop through the groups in the theatre
+        # Loop through the groups in the Cinema
         for i in range(0, len(self.groups)):
             # Run the greedy search for each group
             self.seating.append(self.seat_greedy_single_group(self.groups[i]))
         # Return the list of seats for each group
         return self.seating
 
-# A class that represents a greedy search for the best seats in a theatre
-# Inherits from the Theatre class, so it has access to all of the methods in the Theatre class
-# Unlike the Theatre_Greedy class, this class considers different arrangements than seating an entire group in a row
+# A class that represents a greedy search for the best seats in a Cinema
+# Inherits from the Cinema class, so it has access to all of the methods in the Cinema class
+# Unlike the Cinema_Greedy class, this class considers different arrangements than seating an entire group in a row
 # For example, a group of 4 could be seated in 2 rows of 2 people next to each other
-class Theatre_Greedy_Shapes(Theatre_Greedy):
-    # Create the theatre
+class Cinema_Greedy_Shapes(Cinema_Greedy):
+    # Create the Cinema
     def __init__(self, fname):
-        # Run the Theatre constructor
+        # Run the Cinema constructor
         super().__init__(fname)
         # Define the shapes that can be used to seat a group
         self.shapes = self.define_shapes()
@@ -482,7 +482,7 @@ class Theatre_Greedy_Shapes(Theatre_Greedy):
         shapes = self.shapes[group_size]
         # Create a list to hold the valid paths
         valid_paths = []
-        # Loop through the seats in the theatre
+        # Loop through the seats in the Cinema
         for i in range(0, len(self.layout)):
             for j in range(0, len(self.layout[i])):
                 # If the seat is valid, find the rest of the path that starts at the seat
@@ -506,14 +506,14 @@ class Theatre_Greedy_Shapes(Theatre_Greedy):
 
 
 if __name__ == '__main__':
-    # Theatre being tested is Tillburg_4 0.7
-    #fname = 'test_theatre.txt'
+    # Cinema being tested is Tillburg_4 0.7
+    #fname = 'test_Cinema.txt'
 
-    # Simple example theatre from the paper
-    fname = 'simple_theatre.txt'
+    # Simple example Cinema from the paper
+    fname = 'simple_Cinema.txt'
 
     # Run the Greedy Search
-    test = Theatre_Greedy_Shapes(fname)
+    test = Cinema_Greedy_Shapes(fname)
     test.seat_greedy()
     test.analyze_results()
     test.print_results()
