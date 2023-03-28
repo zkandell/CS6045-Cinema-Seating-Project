@@ -6,7 +6,7 @@ class Cinema:
     def __init__(self, file):
         self.file = self.read_file(file)
         # The layout of the cinema, represented by a numpy array
-        self.layout = self.Cinema_layout(self.file)
+        self.layout = self.cinema_layout(self.file)
         # The total number of available seats in the cinema (represented by 1s in the layout)
         self.num_seats = np.sum(self.layout)
         # The size of the largest individual group that the seating algorithm will consider
@@ -41,17 +41,17 @@ class Cinema:
     # 0s represent non-existent seats (for example, an aisle) and 1s represent available seats
     # The layout is stored in a numpy array
     # While not represented here, occupied seats are represented by 2s once they are assigned
-    def Cinema_layout(self,content):
+    def cinema_layout(self,content):
         # Grab the first two lines of the file, the height and width of the Cinema
         h = int(content[0])
         w = int(content[1])
         # Create a numpy array of zeros with the dimensions of the Cinema
-        Cinema = np.zeros((h,w))
+        cinema = np.zeros((h,w))
         # Loop through all but the last line of the file, and fill that matrix with the values
         for i in range(2, len(content)-1):
             for j in range(0, len(content[i])):
-                Cinema[i-2][j] = int(content[i][j])
-        return Cinema
+                cinema[i-2][j] = int(content[i][j])
+        return cinema
 
     # Turns the groups notation into a list of integers that represent the groups directly
     # In the file, the last line gives the number of groups of each size (for example, 0 2 0 means no groups of size 1 or 3, with 2 groups of size 2)
