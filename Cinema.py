@@ -148,8 +148,8 @@ class Cinema:
             degrees += self.get_degree(seat)
         return degrees
 
-    # Prints the layout of the Cinema
-    def print_Cinema(self):
+    # Prints the layout of the cinema
+    def print_cinema(self):
         print(self.layout)
 
     
@@ -277,7 +277,7 @@ class Cinema:
     # For that reason, this is only called in the constructor in the child classes; this class has no seating algorithm
     def print_results(self):
         # Print the Cinema
-        self.print_Cinema()
+        self.print_cinema()
         # Print the groups
         print('Total Groups: ' + str(len(self.groups)))
         # Print the number of groups that were seated

@@ -57,9 +57,9 @@ def largeshapecompdemo():
 
 # Run the demo
 
-# Benchmark algorithms
+# Benchmark algorithm demo
 simplebasedemo()
-#largebasedemo()
+largebasedemo()
 
 # Shape algorithm demo
 #simpleshapedemo()
