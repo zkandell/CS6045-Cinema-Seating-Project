@@ -6,7 +6,7 @@ import time
 from Cinema import Cinema_Greedy
 from Cinema import Cinema_Greedy_Shapes
 
-def TestCinemaFile(cinemafilename):
+def TestCinemaFile(cinemafilename, resultfoldername='results'):
     # Greedy algorithm
     basetest = Cinema_Greedy(cinemafilename)
     # Greedy algorithm with shapes
@@ -31,9 +31,9 @@ def TestCinemaFile(cinemafilename):
     shapetest.analyze_results()
 
     # Return the results
-    return [cinemafilename, basetest.num_occupied, shapetest.num_occupied, greedytime, shapetime]
+    return [cinemafilename, basetest.num_occupied, shapetest.num_occupied, greedytime, shapetime, basetest.layout, shapetest.layout]
 
-def TestCinemaFolder(foldername):
+def TestCinemaFolder(foldername,resultfoldername='results'):
     # Create a list to hold the results
     results = []
     # Go through all files in the folder
@@ -42,8 +42,9 @@ def TestCinemaFolder(foldername):
         # If the file is a text file
         if filename.endswith(".txt"):
             print("Testing: ", filename)
-            print(TestCinemaFile(filepath))
-            results.append(TestCinemaFile(filepath))
+            cinema = TestCinemaFile(filepath, resultfoldername)
+            print(cinema)
+            results.append(cinema)
             print("\n")
         # If this is a folder
         elif os.path.isdir(filepath):
