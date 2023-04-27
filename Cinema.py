@@ -380,7 +380,7 @@ class Cinema:
         print('Seated Groups: ' + str(self.num_seated_groups))
 
         # Print the percentage of groups that were seated
-        print('Seated Groups (%): ' + str(self.percent_seated))
+        print('Seated Groups (%): ' + str(self.percent_seated) + '%')
 
         # Print the number of total possible seats
         print('Total Seats: ' + str(self.num_seats))
@@ -392,7 +392,7 @@ class Cinema:
         print('Tickets Purchased: ' + str(self.num_people))
 
         # Print the percentage of seats that were occupied
-        print('Occupied Seats (%): ' + str(self.percent_occupied))
+        print('Occupied Seats (%): ' + str(self.percent_occupied) + '%')
 
         # Print the percentage of people who wanted to attend that were seated
-        print('Seated People (%): ' + str(self.percent_people_seated))
+        print('Seated People (%): ' + str(self.percent_people_seated) + '%')
