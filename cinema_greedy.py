@@ -5,7 +5,6 @@ from Cinema import Cinema
 #   the Cinema class
 # Methods unique to the Greedy search are defined in this class
 # The Greedy search finds the best seats for the given group size at the moment
-
 class Cinema_Greedy(Cinema):
     # Create the Cinema
     def __init__(self, fname):

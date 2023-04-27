@@ -1,5 +1,5 @@
-from Cinema import Cinema_Greedy
-from Cinema import Cinema_Greedy_Shapes
+from cinema_greedy import Cinema_Greedy
+from cinema_greedy_shapes import Cinema_Greedy_Shapes
 
 # Cinema being tested is Tillburg_4 0.7
 fname = 'test_cinema.txt'
