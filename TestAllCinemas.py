@@ -55,7 +55,7 @@ def TestCinemaFolder(foldername):
 results = TestCinemaFolder('TestCinemas/Real')
 print(results)
 # Write the results to a file
-with open('TestCinemas/Real/results.txt', 'w') as f:
+with open('results.txt', 'w') as f:
     for item in results:
         try:
             f.write("%s\n" % item)
