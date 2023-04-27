@@ -356,14 +356,14 @@ class Cinema:
                     self.num_occupied += 1
 
         # Calculate the percentage of groups that were seated
-        self.percent_seated = self.num_seated_groups / len(self.groups)
+        self.percent_seated = round(((self.num_seated_groups / len(self.groups)) * 100), 2)
 
         # Calculate the percentage of seats that were occupied
-        self.percent_occupied = self.num_occupied / self.num_seats
+        self.percent_occupied = round(((self.num_occupied / self.num_seats) * 100), 2)
 
         # Calculate the percentage of people who wanted to attend that were 
         #   seated
-        self.percent_people_seated = self.num_occupied / self.num_people
+        self.percent_people_seated = round(((self.num_occupied / self.num_people) * 100), 2)
     
     # Prints the results of seating the groups in the Cinema
     # This has to be called after the groups have been seated
