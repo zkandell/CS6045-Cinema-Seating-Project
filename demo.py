@@ -1,5 +1,5 @@
-from Cinema import Cinema_Greedy
-from Cinema import Cinema_Greedy_Shapes
+from cinema_greedy import Cinema_Greedy
+from cinema_greedy_shapes import Cinema_Greedy_Shapes
 
 def simplebasedemo():
     fname = 'simple_cinema.txt'
