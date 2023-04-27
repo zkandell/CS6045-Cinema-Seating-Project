@@ -43,7 +43,7 @@ class Cinema:
         self.adjacency_list = self.generate_adjacency_list()
 
 
-    def read_file(self,fname):
+    def read_file(self, fname):
         # Read the file and break it into lines
         with open(fname) as f:
             content = f.readlines()
@@ -60,7 +60,7 @@ class Cinema:
     # The layout is stored in a numpy array
     # While not represented here, occupied seats are represented by 2s once 
     #   they are assigned
-    def cinema_layout(self,content):
+    def cinema_layout(self, content):
         # Grab the first two lines of the file, the height and width of the 
         # Cinema
         h = int(content[0])
@@ -68,11 +68,13 @@ class Cinema:
 
         # Create a numpy array of zeros with the dimensions of the Cinema
         cinema = np.zeros((h,w), dtype=int)
+
         # Loop through all but the last line of the file, and fill that matrix 
         #   with the values
         for i in range(2, len(content)-1):
             for j in range(0, len(content[i])):
                 cinema[i-2][j] = int(content[i][j])
+
         return cinema
 
     # Turns the groups notation into a list of integers that represent the 
@@ -82,7 +84,7 @@ class Cinema:
     #   size 2)
     # This function turns that into a list of integers, where each integer 
     #   represents a group of that size
-    def get_groups(self,content):
+    def get_groups(self, content):
         # Grab the last line of the file, the number of groups of each size
         groups = content[len(content)-1]
 
@@ -149,6 +151,7 @@ class Cinema:
     def generate_weights(self):
         # Create an array to hold the weights
         weights = []
+
         # Loop through the edges
         for i in range(0, len(self.edges)):
             # If the y coordinates of the two seats are the same, add 1 to the 
@@ -175,6 +178,7 @@ class Cinema:
                 # Create a list to hold the seats that are connected to the 
                 #   current seat
                 adjacency = []
+                
                 # Loop through the edges
                 for k in range(0, len(self.edges)):
                     # If the current seat is one of the seats in the edge, add 
@@ -242,9 +246,11 @@ class Cinema:
         path_degrees = []
         for i in range(0, len(paths)):
             path_degrees.append(self.get_path_degree(paths[i]))
+
         # Set the minimum degree to the degree of the first path in the list
         min_degree = path_degrees[0]
         index = 0
+
         # Loop through the paths in the list
         for i in range(1, len(paths)):
             # If the degree of the current path is less than the minimum 
@@ -434,10 +440,12 @@ class Cinema_Greedy(Cinema):
     def seat_greedy(self):
         # Create a list to hold the seats for each group
         self.seating = []
+
         # Loop through the groups in the Cinema
         for i in range(0, len(self.groups)):
             # Run the greedy search for each group
             self.seating.append(self.seat_greedy_single_group(self.groups[i]))
+
         # Return the list of seats for each group
         return self.seating
 
@@ -453,8 +461,10 @@ class Cinema_Greedy_Shapes(Cinema_Greedy):
     def __init__(self, fname):
         # Run the Cinema constructor
         super().__init__(fname)
+
         # Define the shapes that can be used to seat a group
         self.shapes = self.define_shapes()
+
         # Run the search
         #self.seat_greedy()
         # Analyze the results of the greedy search
