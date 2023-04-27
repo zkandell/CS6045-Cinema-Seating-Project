@@ -1,0 +1,4 @@
+['TestCinemas/Real/Tillburg_4/temp\\0.3.txt', 114, 114, 0.1750032901763916, 0.26801323890686035]
+['TestCinemas/Real/Tillburg_4/temp\\0.5.txt', 128, 129, 0.21399736404418945, 0.369002103805542]
+['TestCinemas/Real/Tillburg_4/temp\\0.7.txt', 135, 138, 0.2389988899230957, 1.702002763748169]
+['TestCinemas/Real/Tillburg_4/temp\\0.9.txt', 148, 150, 0.25499963760375977, 1.8840091228485107]

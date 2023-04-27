@@ -50,9 +50,11 @@ def TestCinemaFolder(foldername):
             print("Testing folder: ", filename)
             TestCinemaFolder(filepath)
             print("\n")
+    # Return the results
+    return results
     
 # Run the test
-results = TestCinemaFolder('TestCinemas/Real')
+results = TestCinemaFolder('TestCinemas')
 print(results)
 # Write the results to a file
 with open('results.txt', 'w') as f:
