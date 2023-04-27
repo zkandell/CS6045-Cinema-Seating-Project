@@ -118,6 +118,7 @@ class Cinema:
     def generate_edges(self):
         # Create an array to hold the edges
         edges = []
+
         # Define the offsets for the seats that can be connected to a seat
         offsets = np.array([[-1,0], [1,0], [0,-1], [0,1], [-1,-1], [-1,1], 
                             [1,-1], [1,1], [0,2], [0,-2]])
@@ -167,6 +168,7 @@ class Cinema:
     def generate_adjacency_list(self):
         # Create a dictionary to hold the adjacency list
         adjacency_list = {}
+        
         # Loop through the seats in the Cinema
         for i in range(0, len(self.layout)):
             for j in range(0, len(self.layout[i])):
@@ -385,7 +387,7 @@ class Cinema:
 
         # Print the percentage of seats that were occupied
         print('Occupied Seats (%): ' + str(self.percent_occupied))
-        
+
         # Print the percentage of people who wanted to attend that were seated
         print('Seated People (%): ' + str(self.percent_people_seated))
 
