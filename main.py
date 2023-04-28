@@ -7,11 +7,15 @@ fname = 'test_cinema.txt'
 # Simple example cinema from the paper
 #fname = 'simple_cinema.txt'
 
+print('Greedy Algorithm: ')
 test = Cinema_Greedy(fname)
 test.seat_greedy()
 test.analyze_results()
 test.print_results()
 
+print('')
+
+print('Greedy Shapes: ')
 shapetest = Cinema_Greedy_Shapes(fname)
 shapetest.seat_greedy()
 shapetest.analyze_results()
