@@ -57,6 +57,21 @@ def TestCinemaFolder(foldername,resultfoldername='results'):
     
 
 # Run the test
+realcinemaslist = os.listdir('TestCinemas/Real')
+print(realcinemaslist)
+for folder in realcinemaslist:
+    print(folder)
+    results = TestCinemaFolder('TestCinemas/Real/'+folder)
+    print(results)
+    # Write the results to a file
+    with open('results'+folder+'.txt', 'w') as f:
+        for item in results:
+            try:
+                f.write("%s\n" % item)
+            except:
+                print("Error writing to file")
+                print(item)
+
 randomcinemaslist = os.listdir('TestCinemas/Random')
 print(randomcinemaslist)
 # Trim it down to theaters with less than 1000 seats
