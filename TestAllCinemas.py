@@ -31,7 +31,8 @@ def TestCinemaFile(cinemafilename, resultfoldername='results'):
     shapetest.analyze_results()
 
     # Return the results
-    return [cinemafilename, basetest.num_occupied, shapetest.num_occupied, greedytime, shapetime, basetest.layout, shapetest.layout]
+    return [cinemafilename, basetest.num_occupied, shapetest.num_occupied, 
+            greedytime, shapetime, basetest.layout, shapetest.layout]
 
 def TestCinemaFolder(foldername,resultfoldername='results'):
     # Create a list to hold the results
