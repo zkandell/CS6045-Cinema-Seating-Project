@@ -31,7 +31,7 @@ def TestCinemaFile(cinemafilename, resultfoldername='results'):
     shapetest.analyze_results()
 
     # Return the results
-    return [cinemafilename, basetest.num_occupied, shapetest.num_occupied, greedytime, shapetime, basetest.layout, shapetest.layout]
+    return [cinemafilename, basetest.num_occupied, shapetest.num_occupied, greedytime, shapetime]#, basetest.layout, shapetest.layout]
 
 def TestCinemaFolder(foldername,resultfoldername='results'):
     # Create a list to hold the results
@@ -49,19 +49,41 @@ def TestCinemaFolder(foldername,resultfoldername='results'):
         # If this is a folder
         elif os.path.isdir(filepath):
             print("Testing folder: ", filename)
-            TestCinemaFolder(filepath)
+            subresults = TestCinemaFolder(filepath)
             print("\n")
+            results.extend(subresults)
     # Return the results
     return results
     
+
 # Run the test
-results = TestCinemaFolder('TestCinemas')
-print(results)
-# Write the results to a file
-with open('results.txt', 'w') as f:
-    for item in results:
-        try:
-            f.write("%s\n" % item)
-        except:
-            print("Error writing to file")
-            print(item)
+randomcinemaslist = os.listdir('TestCinemas/Random')
+print(randomcinemaslist)
+# Trim it down to theaters with less than 1000 seats
+randomcinemaslist = [x for x in randomcinemaslist if int(x) == 900]
+print(randomcinemaslist)
+for folder in randomcinemaslist:
+    print(folder)
+    results = TestCinemaFolder('TestCinemas/Random/'+folder)
+    print(results)
+    # Write the results to a file
+    with open('results'+folder+'.txt', 'w') as f:
+        for item in results:
+            try:
+                f.write("%s\n" % item)
+            except:
+                print("Error writing to file")
+                print(item)
+
+
+
+# results = TestCinemaFolder('TestCinemas/Random')
+# print(results)
+# # Write the results to a file
+# with open('RandomCinemaResults.txt', 'w') as f:
+#     for item in results:
+#         try:
+#             f.write("%s\n" % item)
+#         except:
+#             print("Error writing to file")
+#             print(item)
