@@ -9,6 +9,7 @@ from cinema_greedy_shapes import Cinema_Greedy_Shapes
 def TestCinemaFile(cinemafilename, resultfoldername='results'):
     # Greedy algorithm
     basetest = Cinema_Greedy(cinemafilename)
+
     # Greedy algorithm with shapes
     shapetest = Cinema_Greedy_Shapes(cinemafilename)
 
@@ -16,6 +17,7 @@ def TestCinemaFile(cinemafilename, resultfoldername='results'):
     # Note the start time
     start = time.time()
     basetest.seat_greedy()
+
     # Note the end time
     end = time.time()
     greedytime = end - start
@@ -25,6 +27,7 @@ def TestCinemaFile(cinemafilename, resultfoldername='results'):
     # Note the start time
     start = time.time()
     shapetest.seat_greedy()
+
     # Note the end time
     end = time.time()
     shapetime = end - start
@@ -37,6 +40,7 @@ def TestCinemaFile(cinemafilename, resultfoldername='results'):
 def TestCinemaFolder(foldername,resultfoldername='results'):
     # Create a list to hold the results
     results = []
+
     # Go through all files in the folder
     for filename in os.listdir(foldername):
         filepath = os.path.join(foldername, filename)
@@ -58,6 +62,7 @@ def TestCinemaFolder(foldername,resultfoldername='results'):
 # Run the test
 results = TestCinemaFolder('TestCinemas')
 print(results)
+
 # Write the results to a file
 with open('results.txt', 'w') as f:
     for item in results:
