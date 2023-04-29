@@ -57,6 +57,7 @@ def TestCinemaFolder(foldername,resultfoldername='results'):
     
 
 # Run the test
+# Test the real cinemas
 realcinemaslist = os.listdir('TestCinemas/Real')
 print(realcinemaslist)
 for folder in realcinemaslist:
@@ -72,6 +73,7 @@ for folder in realcinemaslist:
                 print("Error writing to file")
                 print(item)
 
+# Test the randomly generated cinemas
 randomcinemaslist = os.listdir('TestCinemas/Random')
 print(randomcinemaslist)
 # Trim it down to theaters with less than 1000 seats
