@@ -60,7 +60,7 @@ def TestCinemaFolder(foldername,resultfoldername='results'):
 randomcinemaslist = os.listdir('TestCinemas/Random')
 print(randomcinemaslist)
 # Trim it down to theaters with less than 1000 seats
-randomcinemaslist = [x for x in randomcinemaslist if int(x) == 900]
+randomcinemaslist = [x for x in randomcinemaslist if int(x) < 1000]
 print(randomcinemaslist)
 for folder in randomcinemaslist:
     print(folder)
