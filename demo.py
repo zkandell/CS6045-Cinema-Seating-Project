@@ -55,6 +55,19 @@ def largeshapecompdemo():
     print("People seated by base algorithm: ", test.num_occupied)
     print("People seated by shape algorithm: ", shapetest.num_occupied)
 
+def worseshapedemo():
+    fname = 'TestCinemas/Real/Spuimarkt_2/0.9.txt'
+    test = Cinema_Greedy(fname)
+    shapetest = Cinema_Greedy_Shapes(fname)
+    test.seat_greedy()
+    test.analyze_results()
+    test.print_results()
+    shapetest.seat_greedy()
+    shapetest.analyze_results()
+    shapetest.print_results()
+    print("People seated by base algorithm: ", test.num_occupied)
+    print("People seated by shape algorithm: ", shapetest.num_occupied)
+
 # Run the demo
 
 # Benchmark algorithm demo
@@ -68,3 +81,4 @@ largeshapedemo()
 # Comparison of algorithms
 largeshapecompdemo()
 modsimpleshapedemo()
+worseshapedemo()
