@@ -10,11 +10,13 @@ Cinema layout file overview
 
 Cinema files are formatted like this:
 
+```
 2
 7
 1110111
 1110111
 0 2 0 0 0 0 0 0
+```
 
 Here is what each of the lines means:
 
@@ -27,7 +29,9 @@ Last line: The groups that need to be seated. This will seat groups of up to 8 p
 
 The final result of the Greedy and Greedy Shapes algorithm is a numpy array that looks like this:
 
+```
 [[2 2 1 0 1 2 2]
  [1 1 1 0 1 1 1]]
+```
  
  This works the same way as in the cinema layout file, with 2s representing occupied seats.
