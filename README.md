@@ -1,10 +1,14 @@
 # CS6045-Cinema-Seating-Project
 
+This project is inspired by https://github.com/maxstoll94/master-thesis-phase-2, with cinema layout data taken from that project. 
+
 This code requires numpy to be installed in order to run. 
 
 To recreate the data used to analyze these formulas, run TestAllCinemas.py. For a general demonstration of the algorithm and its and outputs, run Demo.py. 
 
-Data for cinema layouts taken from https://github.com/maxstoll94/master-thesis-phase-2. 
+Project overview: 
+
+This is a potential solution to the distance constrained cinema seating problem, which was particularly relevant in the early days of the COVID-19 pandemic. Given a specific theater layout and groups of attendees, it attempts to maximize the number of people that can be seated in the theater to maximize revenue. 
 
 Cinema layout file overview
 
